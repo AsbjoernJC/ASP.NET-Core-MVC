@@ -20,6 +20,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+// Routing in mvc. https://localhost:55555/{controller}/{action}/{id}
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
