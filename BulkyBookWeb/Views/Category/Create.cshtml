@@ -8,6 +8,7 @@
             </h2>
             <hr />
         </div>
+        <div asp-validation-summary="All"></div>
         <div class="mb-3" style="">
             <div class="mb-3">
                 <label asp-for="Name">Name</label>
@@ -29,3 +30,8 @@
         <a asp-controller="Category" asp-action="Index" class="btn btn-secondary" style="wídth:150px">Back to list</a>
     </div>
 </form>
+
+@section Scripts {
+    @{<partial name="_ValidationScriptsPartial" />
+    }
+}
