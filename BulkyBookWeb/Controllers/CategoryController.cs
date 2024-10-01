@@ -12,12 +12,15 @@ namespace BulkyBookWeb.Controllers
         {
             _db = db;
         }
+
+        // GET because it is not annotated with [HttpPost]
         public IActionResult Index()
         {
             IEnumerable<Category> categoryList = _db.Categories;
             return View(categoryList);
         }
 
+        // GET because it is not annotated with [HttpPost]
         public IActionResult Create()
         {
             return View();
@@ -41,6 +44,7 @@ namespace BulkyBookWeb.Controllers
         }
 
 
+        // GET because it is not annotated with [HttpPost]
         public IActionResult Edit(int? id)
         {
             if(id == null || id == 0)
@@ -70,11 +74,30 @@ namespace BulkyBookWeb.Controllers
             }
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(category);
+                _db.Categories.Update(category);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(category);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var categoryFromDb = _db.Categories.Find(id);
+            if(categoryFromDb == null)
+            {
+                return NotFound();
+            }
+            _db.Categories.Remove(categoryFromDb);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
